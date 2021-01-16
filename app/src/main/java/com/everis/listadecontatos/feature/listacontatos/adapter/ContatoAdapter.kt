@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.item_contato.view.*
 
 class ContatoAdapter(
     private val context: Context,
-    private val lista: MutableList<ContatosVO>,
+    private val lista: List<ContatosVO>,
     private val onClick: ((Int) -> Unit)
 ) : RecyclerView.Adapter<ContatoViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContatoViewHolder {
@@ -32,6 +32,4 @@ class ContatoAdapter(
 
 }
 
-class ContatoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-
-}
+class ContatoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

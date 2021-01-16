@@ -4,17 +4,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.everis.listadecontatos.R
+import com.everis.listadecontatos.bases.BaseActivity
 import com.everis.listadecontatos.feature.listacontatos.model.ContatosVO
 import com.everis.listadecontatos.singleton.ContatoSingleton
 import kotlinx.android.synthetic.main.activity_contato.*
+import kotlinx.android.synthetic.main.activity_contato.toolBar
 
-class ContatoActivity : AppCompatActivity() {
+class ContatoActivity : BaseActivity() {
 
     private var index: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contato)
+        setupToolBar(toolBar, "Contato",true)
         setupContato()
         btnSalvarConato.setOnClickListener { onClickSalvarContato() }
     }
