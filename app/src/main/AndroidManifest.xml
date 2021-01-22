@@ -8,6 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".application.ContatoApplication"
         android:theme="@style/AppTheme">
         <activity android:name=".feature.contato.ContatoActivity"></activity>
         <activity android:name=".feature.listacontatos.MainActivity">
