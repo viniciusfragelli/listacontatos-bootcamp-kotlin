@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.everis.listadecontatos.R
+import com.everis.listadecontatos.application.ContatoApplication
 import com.everis.listadecontatos.bases.BaseActivity
 import com.everis.listadecontatos.feature.contato.ContatoActivity
 import com.everis.listadecontatos.feature.listacontatos.adapter.ContatoAdapter
 import com.everis.listadecontatos.feature.listacontatos.model.ContatosVO
 import com.everis.listadecontatos.singleton.ContatoSingleton
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
 
 
 class MainActivity : BaseActivity() {
@@ -20,7 +22,6 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        geraListaDeContatos()
         setupToolBar(toolBar, "Lista de contatos",false)
         setupListView()
         setupOnClicks()
@@ -33,19 +34,11 @@ class MainActivity : BaseActivity() {
 
     private fun setupListView(){
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = ContatoAdapter(this,ContatoSingleton.lista) {onClickItemRecyclerView(it)}
-        recyclerView.adapter = adapter
-    }
-
-    private fun geraListaDeContatos(){
-        ContatoSingleton.lista.add(ContatosVO(1,"Fulano", "(00) 9900-0001"))
-        ContatoSingleton.lista.add(ContatosVO(2,"Ciclano", "(00) 9900-0002"))
-        ContatoSingleton.lista.add(ContatosVO(3,"Vinicius", "(00) 9900-0001"))
     }
 
     override fun onResume() {
         super.onResume()
-        adapter?.notifyDataSetChanged()
+        onClickBuscar()
     }
 
     private fun onClickAdd(){
@@ -61,14 +54,11 @@ class MainActivity : BaseActivity() {
 
     private fun onClickBuscar(){
         val busca = etBuscar.text.toString()
-        var listaFiltrada: List<ContatosVO> = ContatoSingleton.lista
-        if(!busca.isNullOrEmpty()){
-            listaFiltrada = ContatoSingleton.lista.filter { contato ->
-                if (contato.nome.toLowerCase().contains(busca.toLowerCase())){
-                    return@filter true
-                }
-                return@filter false
-            }
+        var listaFiltrada: List<ContatosVO> = mutableListOf()
+        try {
+            listaFiltrada = ContatoApplication.instance.helperDB?.buscarContatos(busca) ?: mutableListOf()
+        }catch (ex: Exception){
+            ex.printStackTrace()
         }
         adapter = ContatoAdapter(this,listaFiltrada) {onClickItemRecyclerView(it)}
         recyclerView.adapter = adapter
