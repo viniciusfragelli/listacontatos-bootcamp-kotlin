@@ -1,0 +1,78 @@
+package com.everis.listadecontatos
+
+import com.everis.listadecontatos.feature.listacontatos.model.ContatosVO
+import com.everis.listadecontatos.feature.listacontatos.repository.ListaDeContatosRepository
+import com.everis.listadecontatos.feature.listacontatos.viewmodel.ListaDeContatosViewModel
+import org.junit.Test
+import org.junit.Assert.*
+import org.junit.Before
+import org.mockito.Mockito
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+
+/**
+ * Instrumented test, which will execute on an Android device.
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+class ViewModelTest {
+
+    lateinit var repositoryMock: ListaDeContatosRepository
+    var viewModel: ListaDeContatosViewModel? = null
+    val onSucessoClass: ((List<ContatosVO>)->Unit) = {}
+    val onErrorClass: ((Exception)->Unit) = {}
+
+    @Before
+    fun setUp() {
+        setupMock()
+        viewModel = ListaDeContatosViewModel(
+            repository = repositoryMock
+        )
+    }
+
+    fun setupMock(){
+        repositoryMock = Mockito.mock(ListaDeContatosRepository::class.java)
+        Mockito.`when`(
+            repositoryMock.requestBuscaListaDeContatos(
+                Mockito.any(),
+                Mockito.any(),
+                Mockito.any(),
+                Mockito.any()
+            )
+        ).thenAnswer {
+            val onSucesso = it.arguments[2] as ((List<ContatosVO>)->Unit)
+            var list: MutableList<ContatosVO> = mutableListOf()
+            list.add(ContatosVO(1,"Teste 1","123456"))
+            list.add(ContatosVO(1,"Teste 2","123456"))
+            list.add(ContatosVO(1,"Teste 3","123456"))
+            onSucesso(list)
+            ""
+        }
+    }
+
+    private fun <T> anyObject(): T {
+        return Mockito.anyObject<T>()
+    }
+
+    @Test
+    fun testViewModelOnSucesso() {
+        val lock = CountDownLatch(1);
+        var lista: List<ContatosVO>? = null
+        var onSucesso: ((List<ContatosVO>) -> Unit)
+        viewModel?.doBuscarListaDeContatos(
+            "teste",
+            isBuscaPorID = false,
+            onSucess = { list ->
+                lista = list
+                lock.countDown()
+            },
+            onError = {
+                fail("Retornou excessão do repositorio!")
+            }
+        )
+        lock.await(200000, TimeUnit.MILLISECONDS)
+        assertNotNull(lista)
+        assertFalse(lista!!.isEmpty())
+        assertEquals(lista!!.size,3)
+    }
+}

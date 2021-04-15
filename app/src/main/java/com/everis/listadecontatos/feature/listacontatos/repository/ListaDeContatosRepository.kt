@@ -9,21 +9,21 @@ import com.everis.listadecontatos.helpers.HelperDB.Companion.COLUMNS_TELEFONE
 import com.everis.listadecontatos.helpers.HelperDB.Companion.TABLE_NAME
 import java.sql.SQLDataException
 
-class ListaDeContatosRepository(
+open class ListaDeContatosRepository(
     var helperDBPar: HelperDB? = null
 ) : BaseRepository(helperDBPar) {
     fun requestBuscaListaDeContatos(
-        busca: String,
-        isBuscaPorID: Boolean = false,
-        onSucess: ((List<ContatosVO>)->Unit),
-        onError: ((Exception)->Unit)
+        busca: String? = "",
+        isBuscaPorID: Boolean? = false,
+        onSucess: ((List<ContatosVO>)->Unit)? = {},
+        onError: ((Exception)->Unit)? = {}
     ){
         try {
             val db = readableDatabase
             var lista = mutableListOf<ContatosVO>()
             var where: String? = null
             var args: Array<String> = arrayOf()
-            if (isBuscaPorID) {
+            if (isBuscaPorID ?: false) {
                 where = "$COLUMNS_ID = ?"
                 args = arrayOf("$busca")
             } else {
@@ -33,7 +33,7 @@ class ListaDeContatosRepository(
             var cursor = db?.query(TABLE_NAME, null, where, args, null, null, null)
             if (cursor == null) {
                 db?.close()
-                onError(SQLDataException("Não foi possível fazer sua busca"))
+                onError?.invoke(SQLDataException("Não foi possível fazer sua busca"))
                 return
             }
             while (cursor.moveToNext()) {
@@ -45,9 +45,9 @@ class ListaDeContatosRepository(
                 lista.add(contato)
             }
             db?.close()
-            onSucess(lista)
+            onSucess?.invoke(lista)
         }catch (ex: Exception){
-            onError(ex);
+            onError?.invoke(ex);
         }
     }
 }
