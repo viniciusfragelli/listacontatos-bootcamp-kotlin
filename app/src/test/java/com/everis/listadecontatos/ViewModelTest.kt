@@ -24,13 +24,9 @@ class ViewModelTest {
 
     @Before
     fun setUp() {
-        setupMock()
-        viewModel = ListaDeContatosViewModel(
-            repository = repositoryMock
-        )
     }
 
-    fun setupMock(){
+    fun setupMockOnSucesso(){
         repositoryMock = Mockito.mock(ListaDeContatosRepository::class.java)
         Mockito.`when`(
             repositoryMock.requestBuscaListaDeContatos(
@@ -48,17 +44,56 @@ class ViewModelTest {
             onSucesso(list)
             ""
         }
+        viewModel = ListaDeContatosViewModel(
+            repository = repositoryMock
+        )
     }
 
-    private fun <T> anyObject(): T {
-        return Mockito.anyObject<T>()
+    fun setupMockOnError(){
+        repositoryMock = Mockito.mock(ListaDeContatosRepository::class.java)
+        Mockito.`when`(
+            repositoryMock.requestBuscaListaDeContatos(
+                Mockito.any(),
+                Mockito.any(),
+                Mockito.any(),
+                Mockito.any()
+            )
+        ).thenAnswer {
+            val onError = it.arguments[3] as ((Exception)->Unit)
+            onError(Exception("Erro"))
+            ""
+        }
+        viewModel = ListaDeContatosViewModel(
+            repository = repositoryMock
+        )
+    }
+
+    @Test
+    fun testViewModelOnError() {
+        setupMockOnError()
+        val lock = CountDownLatch(1);
+        var exception: Exception? = null
+        viewModel?.doBuscarListaDeContatos(
+            "teste",
+            isBuscaPorID = false,
+            onSucess = { list ->
+                fail("Caiu no onSucesso")
+                lock.countDown()
+            },
+            onError = {
+                exception = it
+                lock.countDown()
+            }
+        )
+        lock.await(200000, TimeUnit.MILLISECONDS)
+        assertNotNull(exception)
     }
 
     @Test
     fun testViewModelOnSucesso() {
+        setupMockOnSucesso()
         val lock = CountDownLatch(1);
         var lista: List<ContatosVO>? = null
-        var onSucesso: ((List<ContatosVO>) -> Unit)
         viewModel?.doBuscarListaDeContatos(
             "teste",
             isBuscaPorID = false,
