@@ -5,9 +5,6 @@ import com.everis.listadecontatos.helpers.HelperDB
 
 class ContatoApplication : Application() {
 
-    var helperDB: HelperDB? = null
-        private set
-
     companion object {
         lateinit var instance: ContatoApplication
     }
@@ -15,6 +12,5 @@ class ContatoApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        helperDB = HelperDB(this)
     }
 }

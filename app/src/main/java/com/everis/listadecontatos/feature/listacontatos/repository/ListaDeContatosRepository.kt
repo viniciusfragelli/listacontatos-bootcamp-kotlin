@@ -14,7 +14,6 @@ open class ListaDeContatosRepository(
 ) : BaseRepository(helperDBPar) {
     fun requestBuscaListaDeContatos(
         busca: String? = "",
-        isBuscaPorID: Boolean? = false,
         onSucess: ((List<ContatosVO>)->Unit)? = {},
         onError: ((Exception)->Unit)? = {}
     ){
@@ -23,13 +22,8 @@ open class ListaDeContatosRepository(
             var lista = mutableListOf<ContatosVO>()
             var where: String? = null
             var args: Array<String> = arrayOf()
-            if (isBuscaPorID ?: false) {
-                where = "$COLUMNS_ID = ?"
-                args = arrayOf("$busca")
-            } else {
-                where = "$COLUMNS_NOME LIKE ?"
-                args = arrayOf("%$busca%")
-            }
+            where = "$COLUMNS_NOME LIKE ?"
+            args = arrayOf("%$busca%")
             var cursor = db?.query(TABLE_NAME, null, where, args, null, null, null)
             if (cursor == null) {
                 db?.close()

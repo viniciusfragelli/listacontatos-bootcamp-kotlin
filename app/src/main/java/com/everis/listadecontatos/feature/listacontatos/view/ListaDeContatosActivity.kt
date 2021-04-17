@@ -7,15 +7,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.everis.listadecontatos.R
-import com.everis.listadecontatos.application.ContatoApplication
 import com.everis.listadecontatos.bases.BaseActivity
-import com.everis.listadecontatos.feature.contato.ContatoActivity
+import com.everis.listadecontatos.feature.contato.view.ContatoActivity
 import com.everis.listadecontatos.feature.listacontatos.adapter.ContatoAdapter
-import com.everis.listadecontatos.feature.listacontatos.model.ContatosVO
 import com.everis.listadecontatos.feature.listacontatos.viewmodel.ListaDeContatosViewModel
 import com.everis.listadecontatos.helpers.HelperDB
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.Exception
 
 
 class ListaDeContatosActivity : BaseActivity() {
@@ -49,12 +46,14 @@ class ListaDeContatosActivity : BaseActivity() {
     }
 
     private fun onClickAdd(){
-        val intent = Intent(this,ContatoActivity::class.java)
+        val intent = Intent(this,
+            ContatoActivity::class.java)
         startActivity(intent)
     }
 
     private fun onClickItemRecyclerView(index: Int){
-        val intent = Intent(this,ContatoActivity::class.java)
+        val intent = Intent(this,
+            ContatoActivity::class.java)
         intent.putExtra("index", index)
         startActivity(intent)
     }

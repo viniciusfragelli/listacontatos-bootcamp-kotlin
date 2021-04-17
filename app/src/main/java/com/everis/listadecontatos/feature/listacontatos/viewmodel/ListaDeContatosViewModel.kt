@@ -12,19 +12,18 @@ class ListaDeContatosViewModel(
     fun doBuscarListaDeContatos(
         busca: String,
         onSucess: ((List<ContatosVO>)->Unit),
-        onError: ((Exception)->Unit),
-        isBuscaPorID: Boolean = false
+        onError: ((Exception)->Unit)
     ){
         Thread(Runnable {
             Thread.sleep(1500)
             var listaFiltrada: List<ContatosVO> = mutableListOf()
             repository?.requestBuscaListaDeContatos(
                 busca,
-                isBuscaPorID,
                 onSucess = {
                     onSucess(it)
                 },
                 onError = {
+
                     onError(it)
                 }
             )
