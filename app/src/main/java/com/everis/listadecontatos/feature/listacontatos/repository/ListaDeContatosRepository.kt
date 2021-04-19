@@ -12,7 +12,7 @@ import java.sql.SQLDataException
 open class ListaDeContatosRepository(
     var helperDBPar: HelperDB? = null
 ) : BaseRepository(helperDBPar) {
-    fun requestBuscaListaDeContatos(
+    open fun requestBuscaListaDeContatos(
         busca: String? = "",
         onSucess: ((List<ContatosVO>)->Unit)? = {},
         onError: ((Exception)->Unit)? = {}

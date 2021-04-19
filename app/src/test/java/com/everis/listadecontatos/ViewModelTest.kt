@@ -35,7 +35,7 @@ class ViewModelTest {
                 Mockito.any()
             )
         ).thenAnswer {
-            val onSucesso = it.arguments[2] as ((List<ContatosVO>)->Unit)
+            val onSucesso = it.arguments[1] as ((List<ContatosVO>)->Unit)
             var list: MutableList<ContatosVO> = mutableListOf()
             list.add(ContatosVO(1,"Teste 1","123456"))
             list.add(ContatosVO(1,"Teste 2","123456"))
@@ -57,7 +57,7 @@ class ViewModelTest {
                 Mockito.any()
             )
         ).thenAnswer {
-            val onError = it.arguments[3] as ((Exception)->Unit)
+            val onError = it.arguments[2] as ((Exception)->Unit)
             onError(Exception("Erro"))
             ""
         }
