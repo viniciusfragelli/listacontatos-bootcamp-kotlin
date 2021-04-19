@@ -4,13 +4,11 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import com.everis.listadecontatos.R
-import com.everis.listadecontatos.application.ContatoApplication
 import com.everis.listadecontatos.bases.BaseActivity
 import com.everis.listadecontatos.feature.contato.viewmodel.ContatoViewModel
 import com.everis.listadecontatos.feature.listacontatos.model.ContatosVO
 import com.everis.listadecontatos.helpers.HelperDB
 import kotlinx.android.synthetic.main.activity_contato.*
-import kotlinx.android.synthetic.main.activity_contato.toolBar
 
 class ContatoActivity : BaseActivity() {
 

@@ -1,12 +1,10 @@
 package com.everis.listadecontatos.feature.contato.repository
 
 import android.content.ContentValues
-import com.everis.listadecontatos.application.ContatoApplication
 import com.everis.listadecontatos.bases.BaseRepository
 import com.everis.listadecontatos.feature.listacontatos.model.ContatosVO
 import com.everis.listadecontatos.helpers.HelperDB
 import java.sql.SQLDataException
-import java.sql.SQLException
 
 class ContatoRepository(helperDB: HelperDB?) : BaseRepository(helperDB) {
 

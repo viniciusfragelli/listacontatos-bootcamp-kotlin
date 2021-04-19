@@ -1,18 +1,15 @@
 package com.everis.listadecontatos
 
 import android.content.Context
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.everis.listadecontatos.feature.listacontatos.model.ContatosVO
 import com.everis.listadecontatos.feature.listacontatos.repository.ListaDeContatosRepository
-import com.everis.listadecontatos.feature.listacontatos.viewmodel.ListaDeContatosViewModel
 import com.everis.listadecontatos.helpers.HelperDB
-
-import org.junit.Test
-import org.junit.runner.RunWith
-
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 

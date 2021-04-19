@@ -19,8 +19,6 @@ class ViewModelTest {
 
     lateinit var repositoryMock: ListaDeContatosRepository
     var viewModel: ListaDeContatosViewModel? = null
-    val onSucessoClass: ((List<ContatosVO>)->Unit) = {}
-    val onErrorClass: ((Exception)->Unit) = {}
 
     @Before
     fun setUp() {

@@ -1,6 +1,5 @@
 package com.everis.listadecontatos.feature.listacontatos.viewmodel
 
-import com.everis.listadecontatos.application.ContatoApplication
 import com.everis.listadecontatos.feature.listacontatos.model.ContatosVO
 import com.everis.listadecontatos.feature.listacontatos.repository.ListaDeContatosRepository
 import com.everis.listadecontatos.helpers.HelperDB
