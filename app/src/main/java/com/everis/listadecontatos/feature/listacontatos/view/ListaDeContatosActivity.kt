@@ -42,7 +42,7 @@ class ListaDeContatosActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        onClickBuscar()
+        if(!intent.getBooleanExtra("isMock",false))onClickBuscar()
     }
 
     private fun onClickAdd(){
@@ -58,7 +58,7 @@ class ListaDeContatosActivity : BaseActivity() {
         startActivity(intent)
     }
 
-    private fun onClickBuscar(){
+    fun onClickBuscar(){
         val busca = etBuscar.text.toString()
         progress.visibility = View.VISIBLE
         viewModel?.doBuscarListaDeContatos(
@@ -72,15 +72,18 @@ class ListaDeContatosActivity : BaseActivity() {
                 }
             },
             onError = { ex ->
-                var alert = AlertDialog
-                    .Builder(this)
-                    .setTitle("Atenção")
-                    .setCancelable(false)
-                    .setMessage("Não foi possível completar sua solicitação tente novamente mais tarde!")
-                    .setPositiveButton("OK") { dialog, k ->
-                        dialog.dismiss();
-                    }
-                    .show();
+                runOnUiThread {
+                    progress.visibility = View.GONE
+                    var alert = AlertDialog
+                        .Builder(this)
+                        .setTitle("Atenção")
+                        .setCancelable(false)
+                        .setMessage("Não foi possível completar sua solicitação tente novamente mais tarde!")
+                        .setPositiveButton("OK") { dialog, k ->
+                            dialog.dismiss();
+                        }
+                        .show();
+                }
             }
         )
     }

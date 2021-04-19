@@ -5,18 +5,17 @@ import com.everis.listadecontatos.feature.listacontatos.model.ContatosVO
 import com.everis.listadecontatos.feature.listacontatos.repository.ListaDeContatosRepository
 import com.everis.listadecontatos.helpers.HelperDB
 
-class ListaDeContatosViewModel(
+open class ListaDeContatosViewModel(
     var helperDB: HelperDB? = null,
     var repository: ListaDeContatosRepository? = ListaDeContatosRepository(helperDB)
 ) {
-    fun doBuscarListaDeContatos(
+    open fun doBuscarListaDeContatos(
         busca: String,
         onSucess: ((List<ContatosVO>)->Unit),
         onError: ((Exception)->Unit)
     ){
         Thread(Runnable {
             Thread.sleep(1500)
-            var listaFiltrada: List<ContatosVO> = mutableListOf()
             repository?.requestBuscaListaDeContatos(
                 busca,
                 onSucess = {

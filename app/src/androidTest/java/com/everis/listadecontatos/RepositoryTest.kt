@@ -47,7 +47,6 @@ class RepositoryTest {
         var lista: List<ContatosVO>? = null
         repository?.requestBuscaListaDeContatos(
             "teste",
-            false,
             onSucess = { list ->
                 lista = list
                 lock.countDown()
@@ -68,7 +67,6 @@ class RepositoryTest {
         var lista: List<ContatosVO>? = null
         repository?.requestBuscaListaDeContatos(
             "teste",
-            false,
             onSucess = { list ->
                 lista = list
                 lock.countDown()

@@ -32,7 +32,6 @@ class ViewModelTest {
             repositoryMock.requestBuscaListaDeContatos(
                 Mockito.any(),
                 Mockito.any(),
-                Mockito.any(),
                 Mockito.any()
             )
         ).thenAnswer {
@@ -55,7 +54,6 @@ class ViewModelTest {
             repositoryMock.requestBuscaListaDeContatos(
                 Mockito.any(),
                 Mockito.any(),
-                Mockito.any(),
                 Mockito.any()
             )
         ).thenAnswer {
@@ -75,7 +73,6 @@ class ViewModelTest {
         var exception: Exception? = null
         viewModel?.doBuscarListaDeContatos(
             "teste",
-            isBuscaPorID = false,
             onSucess = { list ->
                 fail("Caiu no onSucesso")
                 lock.countDown()
@@ -96,7 +93,6 @@ class ViewModelTest {
         var lista: List<ContatosVO>? = null
         viewModel?.doBuscarListaDeContatos(
             "teste",
-            isBuscaPorID = false,
             onSucess = { list ->
                 lista = list
                 lock.countDown()
