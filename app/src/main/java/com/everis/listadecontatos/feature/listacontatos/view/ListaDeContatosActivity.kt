@@ -23,7 +23,7 @@ class ListaDeContatosActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        viewModel = ListaDeContatosViewModel(
+        if(!intent.getBooleanExtra("isMock",false))viewModel = ListaDeContatosViewModel(
             HelperDB(this)
         )
         setupToolBar(toolBar, "Lista de contatos",false)
